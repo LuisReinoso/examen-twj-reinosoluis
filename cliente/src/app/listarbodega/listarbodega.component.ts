@@ -22,8 +22,19 @@ export class ListarbodegaComponent implements OnInit {
           .map((value) => {
             return value;
           });
-        console.log("Correcto");
-        console.log(res.json());
+      },
+      (err) => {
+        console.log(err);
+      }
+      )
+  }
+
+  eliminiarBodega(id: number) {
+    this._http.delete(this._masterURL.url + "Bodega/" + id)
+      .subscribe(
+      (res) => {
+        let bodegaBorrada = res.json();
+        this.bodegas = this.bodegas.filter(value => bodegaBorrada.id != value.id);
       },
       (err) => {
         console.log(err);

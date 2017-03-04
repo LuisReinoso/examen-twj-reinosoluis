@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Http, Response } from "@angular/http";
 import { MasterUrlService } from "../master-url.service";
 import { NgForm } from "@angular/forms";
@@ -24,13 +24,10 @@ export class BodegaComponent implements OnInit {
       capacidad: formulario.value.capacidad
     }).subscribe(
       (res) => {
-        console.log("No hubo Errores");
+        // TODO: Limpieza
       },
       (err) => {
         console.log("Ocurrio un error", err);
-      },
-      () => {
-        console.log("Termino la función vamos a las casas")
       }
     );
   }
