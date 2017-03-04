@@ -19,6 +19,18 @@ export class ItemComponent implements OnInit {
               private _masterURL: MasterUrlService) { }
 
   ngOnInit() {
+    this._http.get(this._masterURL.url + "Item")
+      .subscribe(
+      (res: Response) => {
+        this.items = res.json()
+          .map((value) => {
+            return value;
+          });
+      },
+      (err) => {
+        console.log(err);
+      }
+      )
   }
 
   crearItem(formulario: NgForm) {
@@ -50,5 +62,15 @@ export class ItemComponent implements OnInit {
       }
     );
 
+  }
+
+  menu(elemento: number) {
+    this.controladorSPA = this.controladorSPA.map(function (value, key) {
+      if (key == elemento) {
+        return true;
+      } else {
+        return false;
+      }
+    })
   }
 }

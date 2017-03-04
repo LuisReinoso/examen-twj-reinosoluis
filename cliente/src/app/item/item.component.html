@@ -40,5 +40,22 @@
       </div>
     </div>
 
+    <!-- Listar -->
+    <div class="col-sm-4 col-lg-4" *ngFor="let item of items" [hidden]="controladorSPA[1]">
+      <div class="thumbnail">
+        <img src="http://placehold.it/320x150" alt="">
+        <div class="caption">
+          <h4 class="pull-right">{{item.cantidad}}</h4>
+          <h4><a>{{item.nombre}}</a></h4>
+          <p>{{item.peso}}</p>
+          <p>{{item.idBodega.nombre}}</p>
+        </div>
+        <p>
+          <a class="btn btn-danger btn-block" role="button">Borrar</a>
+          <a class="btn btn-primary btn-block" role="button">Editar</a>
+        </p>
+      </div>
+    </div>
+
   </div>
 </div>
