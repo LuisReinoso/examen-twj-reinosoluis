@@ -9,12 +9,14 @@ import { HomeComponent } from './home/home.component';
 import { BodegaComponent } from './bodega/bodega.component';
 
 import { MasterUrlService } from "./master-url.service";
+import { ListarbodegaComponent } from './listarbodega/listarbodega.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    BodegaComponent
+    BodegaComponent,
+    ListarbodegaComponent
   ],
   imports: [
     BrowserModule,
