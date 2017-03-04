@@ -12,7 +12,6 @@ export class BodegaComponent implements OnInit {
 
   controladorSPA = [false, true]
 
-
   nuevaBodega = {};
   bodegas = [];
 
