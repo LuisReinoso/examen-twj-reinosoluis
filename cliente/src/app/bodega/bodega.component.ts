@@ -12,6 +12,7 @@ export class BodegaComponent implements OnInit {
 
   controladorSPA = [false, true]
 
+
   nuevaBodega = {};
   bodegas = [];
 
@@ -24,6 +25,7 @@ export class BodegaComponent implements OnInit {
       (res: Response) => {
         this.bodegas = res.json()
           .map((value) => {
+            value.formularioCerrado = true;
             return value;
           });
       },
@@ -64,6 +66,23 @@ export class BodegaComponent implements OnInit {
       )
   }
 
+  actualizarBodega(bodega: any) {
+    let parametos = {
+      nombre: bodega.nombre,
+      direccion: bodega.direccion,
+      capacidad: bodega.capacidad
+    };
+    this._http.put(this._masterURL.url + "Bodega/" + bodega.id, parametos)
+      .subscribe(
+        (res: Response) => {
+          bodega.formularioCerrado = !bodega.formularioCerrado;
+        },
+        (err) => {
+          console.log("Error:", err);
+        }
+      )
+  }
+
   menu(elemento: number) {
     this.controladorSPA = this.controladorSPA.map(function (value, key) {
       if (key == elemento) {
@@ -72,6 +91,5 @@ export class BodegaComponent implements OnInit {
         return false;
       }
     })
-    console.log(this.controladorSPA);
   }
 }
