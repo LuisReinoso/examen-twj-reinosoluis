@@ -16,7 +16,7 @@ export class ItemComponent implements OnInit {
   items = [];
 
   constructor(private _http: Http,
-              private _masterURL: MasterUrlService) { }
+    private _masterURL: MasterUrlService) { }
 
   ngOnInit() {
     this._http.get(this._masterURL.url + "Item")
@@ -36,36 +36,63 @@ export class ItemComponent implements OnInit {
   crearItem(formulario: NgForm) {
 
     this._http.get(this._masterURL.url
-      + "Bodega?where={'nombre':'"+formulario.value.bodega+"'}").subscribe(
+      + "Bodega?where={\"nombre\":\"" + formulario.value.bodega + "\"}").subscribe(
       (res) => {
 
         var bodega = res.json()[0]
 
-        this._http.post(this._masterURL.url + "Item", {
-          nombre: formulario.value.nombre,
-          cantidad: formulario.value.cantidad,
-          peso: formulario.value.peso,
-          idBodega: bodega.id
-        }).subscribe(
-          (res) => {
-            this.items.push(res.json());
-            this.nuevoItem = {};
-          },
-          (err) => {
-            console.log("Ocurrio un error", err);
-          }
-        );
+        if (bodega) {
+          this._http.post(this._masterURL.url + "Item", {
+            nombre: formulario.value.nombre,
+            cantidad: formulario.value.cantidad,
+            peso: formulario.value.peso,
+            idBodega: bodega.id
+          }).subscribe(
+            (res) => {
+              this.items.push(res.json());
+              this.nuevoItem = {};
 
+              this._http.get(this._masterURL.url + "Item")
+                .subscribe(
+                (res: Response) => {
+                  this.items = res.json()
+                    .map((value) => {
+                      return value;
+                    });
+                },
+                (err) => {
+                  console.log(err);
+                }
+                )
+            },
+            (err) => {
+              console.log("Ocurrio un error", err);
+            }
+            );
+          }
       },
       (err) => {
         console.log("Ocurrio un error", err);
       }
-    );
+      );
 
   }
 
+  eliminiarItem(id: number) {
+    this._http.delete(this._masterURL.url + "Item/" + id)
+      .subscribe(
+      (res) => {
+        let itemBorrada = res.json();
+        this.items = this.items.filter(value => itemBorrada.id != value.id);
+      },
+      (err) => {
+        console.log(err);
+      }
+      )
+  }
+
   menu(elemento: number) {
-    this.controladorSPA = this.controladorSPA.map(function (value, key) {
+    this.controladorSPA = this.controladorSPA.map(function(value, key) {
       if (key == elemento) {
         return true;
       } else {

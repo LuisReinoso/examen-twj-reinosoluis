@@ -51,7 +51,7 @@
           <p>{{item.idBodega.nombre}}</p>
         </div>
         <p>
-          <a class="btn btn-danger btn-block" role="button">Borrar</a>
+          <a (click)="eliminiarItem(item.id)" class="btn btn-danger btn-block" role="button">Borrar</a>
           <a class="btn btn-primary btn-block" role="button">Editar</a>
         </p>
       </div>
