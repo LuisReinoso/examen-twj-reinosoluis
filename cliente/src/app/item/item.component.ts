@@ -73,6 +73,8 @@ export class ItemComponent implements OnInit {
               console.log("Ocurrio un error", err);
             }
             );
+        } else {
+          console.log("Ocurrio un error parametros");
         }
       },
       (err) => {
@@ -118,6 +120,8 @@ export class ItemComponent implements OnInit {
               console.log("Error:", err);
             }
             )
+        } else {
+          console.log("Ocurrio un error parametros");
         }
       },
       (err) => {
