@@ -22,8 +22,12 @@ export class ItemComponent implements OnInit {
     this._http.get(this._masterURL.url + "Item")
       .subscribe(
       (res: Response) => {
+
+        console.log(res.json())
         this.items = res.json()
           .map((value) => {
+            value.formularioCerrado = true;
+            console.log(value)
             return value;
           });
       },
@@ -49,7 +53,6 @@ export class ItemComponent implements OnInit {
             idBodega: bodega.id
           }).subscribe(
             (res) => {
-              this.items.push(res.json());
               this.nuevoItem = {};
 
               this._http.get(this._masterURL.url + "Item")
@@ -57,6 +60,7 @@ export class ItemComponent implements OnInit {
                 (res: Response) => {
                   this.items = res.json()
                     .map((value) => {
+                      value.formularioCerrado = true;
                       return value;
                     });
                 },
@@ -69,7 +73,7 @@ export class ItemComponent implements OnInit {
               console.log("Ocurrio un error", err);
             }
             );
-          }
+        }
       },
       (err) => {
         console.log("Ocurrio un error", err);
@@ -89,6 +93,38 @@ export class ItemComponent implements OnInit {
         console.log(err);
       }
       )
+  }
+
+  actualizarItem(item: any) {
+
+    this._http.get(this._masterURL.url
+      + "Bodega?where={\"nombre\":\"" + item.idBodega.nombre + "\"}").subscribe(
+      (res) => {
+        var bodega = res.json()[0]
+
+        if (bodega) {
+          let parametos = {
+            nombre: item.nombre,
+            cantidad: item.direccion,
+            peso: item.capacidad,
+            idBodega: bodega.id
+          };
+          this._http.put(this._masterURL.url + "Item/" + item.id, parametos)
+            .subscribe(
+            (res: Response) => {
+              item.formularioCerrado = !item.formularioCerrado;
+            },
+            (err) => {
+              console.log("Error:", err);
+            }
+            )
+        }
+      },
+      (err) => {
+        console.log("Ocurrio un error", err);
+      }
+      );
+
   }
 
   menu(elemento: number) {

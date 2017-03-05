@@ -43,7 +43,12 @@ export class BodegaComponent implements OnInit {
       capacidad: formulario.value.capacidad
     }).subscribe(
       (res) => {
-        this.bodegas.push(res.json());
+
+        var respuesta = res.json()
+        respuesta.formularioCerrado = true;
+
+        console.log(respuesta)
+        this.bodegas.push(respuesta);
         this.nuevaBodega = {};
       },
       (err) => {
